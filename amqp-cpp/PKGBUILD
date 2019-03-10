@@ -1,4 +1,4 @@
-# Maintainer: Paul Hentschel (hpmachining)
+# Maintainer: Tong Chunli (tty2099@gmail.com) 
 
 pkgname=amqp-cpp
 _pkgnm=AMQP-CPP
