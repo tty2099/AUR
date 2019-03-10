@@ -18,7 +18,7 @@ package(){
   cd "$srcdir"
   rm -rf build
   mkdir build && cd build
-  cmake -DCMAKE_INSTALL_PREFIX=/usr ../$_pkgnm-$pkgver    
+  cmake -DCMAKE_INSTALL_PREFIX=/usr -DAMQP-CPP_BUILD_SHARED=on -DAMQP-CPP_LINUX_TCP=on ../$_pkgnm-$pkgver    
   make
   make DESTDIR=$pkgdir install
 }
