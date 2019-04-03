@@ -1,0 +1,36 @@
+# Maintainer: Tong Chunli <piggy1983@gmail.com>
+
+pkgname=wps-office
+pkgver=11.1.0.8372
+pkgrel=1
+pkgdesc="Kingsoft Office (WPS Office) is an office productivity suite"
+arch=('i686' 'x86_64')
+license=("custom")
+url="http://wps-community.org/"
+depends=('fontconfig' 'xorg-mkfontdir' 'libxrender' 'desktop-file-utils' 'shared-mime-info' 'xdg-utils' 'glu' 'openssl-1.0' 'sdl2' 'libpulse' 'hicolor-icon-theme')
+optdepends=('cups: for printing support'
+            'libjpeg-turbo: JPEG image codec support'
+            'pango: for complex (right-to-left) text support'
+            'curl: An URL retrieval utility and library'
+            'ttf-wps-fonts: Symbol fonts required by wps-office')
+conflicts=('kingsoft-office')
+options=('!emptydirs')
+[[ "$CARCH" = "i686" ]] && _archext=x86 || _archext=x86_64
+source_i686=("http://wdl1.cache.wps.cn/wps/download/ep/Linux2019/${pkgver##*.}/wps-office_${pkgver}_i386.deb")
+source_x86_64=("http://wdl1.cache.wps.cn/wps/download/ep/Linux2019/${pkgver##*.}/wps-office_${pkgver}_amd64.deb")
+sha1sums_i686=('d2a12b05fb2cb8f19a12c266f1e4477f199906ad')
+sha1sums_x86_64=('3b7a199c7da8ea64aaa2f00d6474a11c9714eb8a')
+
+prepare() {
+    cd $srcdir
+    tar xpf data.tar.xz
+}
+
+package() {
+
+    install -d ${pkgdir}/opt/
+    cp -r opt/* ${pkgdir}/opt/
+
+    install -d ${pkgdir}/usr
+    cp -r usr/* $pkgdir/usr/
+}
