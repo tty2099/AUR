@@ -1,0 +1,25 @@
+# Maintainer: Tong Chunli (tty2099@gmail.com) 
+
+pkgname=fastrtps
+_pkgnm=Fast-RTPS
+pkgver=1.8.0
+pkgrel=1
+pkgdesc="eprosima Fast RTPS is a C++ implementation of the RTPS (Real Time Publish Subscribe) protocol, which provides publisher-subscriber communications over unreliable transports such as UDP, as defined and maintained by the Object Management Group (OMG) consortium."
+arch=('any')
+url="https://www.eprosima.com"
+license=('Apache2.0')
+depends=(asio fastcdr tinyxml2)
+makedepends=('cmake')
+source=(https://github.com/eProsima/Fast-RTPS/archive/v${pkgver}.tar.gz)
+sha256sums=('c20fc98570c599ba6c22bec1d44468d7c2495ee6cf30aae3474c541b2d193b79')
+
+
+package(){
+  cd "$srcdir"
+  rm -rf build
+  mkdir build && cd build
+  cmake -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release .-DTHIRD_PARTY=ON -DSECURITY=ON ../$_pkgnm-$pkgver    
+  make
+  make DESTDIR=$pkgdir install
+}
+
