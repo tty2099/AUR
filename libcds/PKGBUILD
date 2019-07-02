@@ -1,0 +1,27 @@
+# Maintainer: Tong Chunli (tty2099@gmail.com) 
+
+pkgname=libcds
+pkgver=2.3.3
+pkgrel=1
+pkgdesc="The Concurrent Data Structures (CDS) library" 
+arch=('any')
+url="https://github.com/khizmax/libcds"
+license=('Boost')
+depends=()
+makedepends=('cmake')
+source=(https://github.com/khizmax/libcds/archive/v${pkgver}.tar.gz)
+sha256sums=('f090380ecd6b63a3c2b2f0bdb27260de2ccb22486ef7f47cc1175b70c6e4e388')
+
+
+package(){
+  cd "$srcdir"
+  rm -rf build
+  mkdir build && cd build
+  cmake -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release ../$pkgname-$pkgver    
+  sed -i -e 's|/lib64|/lib|g' cmake_install.cmake
+  sed -i -e 's|/lib64/|/lib/|g' CMakeFiles/Export/lib/cmake/LibCDS/LibCDSConfig-release.cmake
+  make
+  #sed -i -e 's|/lib64/|/lib/|g' install_manifest.txt
+  make DESTDIR=$pkgdir install
+}
+
